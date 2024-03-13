@@ -8,3 +8,9 @@ Hasil JMeter CLI
 ![img5.png](img5.png)
 ![img6.png](img6.png)
 
+Hasil JMeter setelah profiling
+![img7.png](img7.png)
+![img8.png](img8.png)
+![img9.png](img9.png)
+
+kecepatan request kedua implementasi terlihat jauh berbeda.  Kesimpulannya adalah optimisasi implementasi method akan sangat berpengaruh pada pengujian kecepatan aplikasi.
