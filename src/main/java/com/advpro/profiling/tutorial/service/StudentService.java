@@ -5,6 +5,7 @@ import com.advpro.profiling.tutorial.model.StudentCourse;
 import com.advpro.profiling.tutorial.repository.StudentCourseRepository;
 import com.advpro.profiling.tutorial.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -40,23 +41,25 @@ public class StudentService {
     }
 
     public Optional<Student> findStudentWithHighestGpa() {
-        List<Student> students = studentRepository.findAll();
-        Student highestGpaStudent = null;
-        double highestGpa = 0.0;
-        for (Student student : students) {
-            if (student.getGpa() > highestGpa) {
-                highestGpa = student.getGpa();
-                highestGpaStudent = student;
-            }
-        }
+        List<Sort.Order> sortList = new ArrayList<Sort.Order>();
+        sortList.add(new Sort.Order(Sort.Direction.DESC, "gpa"));
+        sortList.add(new Sort.Order(Sort.Direction.ASC, "name"));
+        List<Student> students = studentRepository.findAll(Sort.by(sortList));
+        Student highestGpaStudent = students.get(0);
         return Optional.ofNullable(highestGpaStudent);
     }
 
     public String joinStudentNames() {
         List<Student> students = studentRepository.findAll();
-        String result = "";
+//        String result = "";
+//        for (Student student : students) {
+//            result += student.getName() + ", ";
+//        }
+//        return result.substring(0, result.length() - 2);
+        StringBuilder result = new StringBuilder();
+        String coma = ", ";
         for (Student student : students) {
-            result += student.getName() + ", ";
+            result.append(student.getName()).append(coma);
         }
         return result.substring(0, result.length() - 2);
     }
